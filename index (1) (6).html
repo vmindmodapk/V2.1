@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vmind v2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://accumulaterehearsehealing.com/ac/61/2c/ac612c15bd2adc9a4e41d475b367341c.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --surface-hover: #f5f5f5;
+            --border: #e5e5e5;
+            --border-strong: #d4d4d4;
+            --text: #171717;
+            --text-secondary: #525252;
+            --text-muted: #a3a3a3;
+            --accent: #7c3aed;
+            --accent-light: #a78bfa;
+            --success: #22c55e;
+        }
+
+        body {
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 24px 140px;
+        }
+
+        /* Header Clean */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 48px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            background: var(--text);
+            color: var(--bg);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .brand h1 {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-pills {
+            display: flex;
+            gap: 4px;
+            background: var(--surface-hover);
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .nav-pill {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-pill:hover {
+            color: var(--text);
+        }
+
+        .nav-pill.active {
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Section */
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        /* Game Grid Modern */
+        .game-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .game-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .game-item:hover {
+            border-color: var(--border-strong);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transform: translateY(-1px);
+        }
+
+        .game-num {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            min-width: 24px;
+        }
+
+        .game-info {
+            flex: 1;
+        }
+
+        .game-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .game-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .game-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #f3e8ff;
+            color: var(--accent);
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
+        .download-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .download-btn:hover {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Donasi Card */
+        .donasi-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+        }
+
+        .donasi-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #f3e8ff, #e0e7ff);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 28px;
+        }
+
+        .donasi-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .donasi-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .donasi-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: var(--text);
+            color: var(--bg);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .donasi-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        /* Form */
+        .form-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--border-strong);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--text);
+            color: var(--bg);
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Modal Clean */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            min-width: 300px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .countdown-simple {
+            font-size: 48px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .modal-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .modal-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--border);
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        .modal-btn.active {
+            background: var(--accent);
+            color: white;
+            pointer-events: auto;
+        }
+
+        /* Adstera Banner */
+        .ad-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 12px;
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ad-label {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--text-muted);
+            background: var(--surface);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .container {
+                padding: 24px 16px 160px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .nav-pills {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .game-item {
+                padding: 14px 16px;
+            }
+
+            .donasi-card,
+            .form-card {
+                padding: 24px;
+            }
+
+            .ad-container {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Games Section -->
+        <div id="gamesSection" class="content-section active">
+            <div class="header">
+                <div class="brand">
+                    <div class="brand-logo">V</div>
+                    <h1>Vmind v2</h1>
+                </div>
+                <div class="nav-pills">
+                    <button class="nav-pill active" onclick="switchTab('games')">Games</button>
+                    <button class="nav-pill" onclick="switchTab('donasi')">Donasi</button>
+                    <button class="nav-pill" onclick="switchTab('lapor')">Lapor</button>
+                </div>
+            </div>
+
+            <div class="section-title">Game Mods</div>
+            <div class="section-subtitle">apk and game premium dengan fitur mod lengkap</div>
+
+            <div class="game-grid" id="gameList"></div>
+        </div>
+
+        <!-- Donasi Section -->
+        <div id="donasiSection" class="content-section">
+            <div class="header">
+                <div class="brand">
+                    <div class="brand-logo">V</div>
+                    <h1>Vmind</h1>
+                </div>
+                <div class="nav-pills">
+                    <button class="nav-pill" onclick="switchTab('games')">Games</button>
+                    <button class="nav-pill active" onclick="switchTab('donasi')">Donasi</button>
+                    <button class="nav-pill" onclick="switchTab('lapor')">Lapor</button>
+                </div>
+            </div>
+
+            <div class="donasi-card">
+                <div class="donasi-icon">☕</div>
+                <div class="donasi-title">Dukung Vmind</div>
+                <div class="donasi-desc">
+                    Bantu kami tetap berbagi game mod gratis dengan berdonasi via saweria
+                </div>
+                <a href="https://saweria.co/VMIND" target="_blank" class="donasi-btn">
+                    Donasi via Saweria→
+                </a>
+            </div>
+        </div>
+
+        <!-- Lapor Section -->
+        <div id="laporSection" class="content-section">
+            <div class="header">
+                <div class="brand">
+                    <div class="brand-logo">V</div>
+                    <h1>Vmind</h1>
+                </div>
+                <div class="nav-pills">
+                    <button class="nav-pill" onclick="switchTab('games')">Games</button>
+                    <button class="nav-pill" onclick="switchTab('donasi')">Donasi</button>
+                    <button class="nav-pill active" onclick="switchTab('lapor')">Lapor</button>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" id="laporNama" placeholder="Nama kamu">
+                </div>
+                <div class="form-group">
+                    <label>Game</label>
+                    <input type="text" id="laporGame" placeholder="Game yang bermasalah">
+                </div>
+                <div class="form-group">
+                    <label>Masalah</label>
+                    <textarea id="laporPesan" placeholder="Jelaskan masalahnya..."></textarea>
+                </div>
+                <button class="submit-btn" onclick="kirimLapor()">Kirim Laporan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adstera Banner -->
+    <div class="ad-container">
+        <span class="ad-label">Advertisement</span>
+        <!-- GANTI DENGAN KODE ADSTERA KAMU DI BAWAH INI -->
+        <script>
+  atOptions = {
+    'key' : '0983d167adc853d4c7f0d6ec086df310',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://accumulaterehearsehealing.com/0983d167adc853d4c7f0d6ec086df310/invoke.js"></script>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+        <div class="modal-box">
+            <div class="countdown-simple" id="countNum">5</div>
+            <div class="modal-text">Tunggu sebentar...</div>
+            <a href="#" id="dlLink" class="modal-btn" target="_blank">Download</a>
+        </div>
+    </div>
+
+    <script>
+        const games = [
+            { title: "Subway surfer mod apk", category: "vmind", size: "801 download", link: "https://shrinkme.click/V2no1" },
+            { title: "House designer mod apk", category: "Vmind", size: "628 download", link: "https://shrinkme.click/Vmindhd" },
+            { title: "Dinosauru universe mod apk", category: "Vmind", size: "213 download", link: "https://shrinkme.click/Vmind3" },
+            { title: "MA 1 SIMULATOR PRESIDEN MOD APK", category: "Vmind", size: "381 download", link: "https://bicolink.com/ogy0wDNR" } 
+        ];
+        
+
+        // Render games
+        const list = document.getElementById('gameList');
+        games.forEach((game, i) => {
+            const item = document.createElement('div');
+            item.className = 'game-item';
+            item.onclick = () => startDownload(game.link);
+            item.innerHTML = `
+                <div class="game-num">${String(i + 1).padStart(2, '0')}</div>
+                <div class="game-info">
+                    <div class="game-title">${game.title}</div>
+                    <div class="game-meta">
+                        <span class="game-tag">${game.category}</span>
+                        ${game.size}
+                    </div>
+                </div>
+                <div class="download-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/>
+                    </svg>
+                </div>
+            `;
+            list.appendChild(item);
+        });
+
+        // Tab switch
+        function switchTab(tab) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+            
+            document.getElementById(tab + 'Section').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Countdown
+        let timer;
+        function startDownload(url) {
+            const modal = document.getElementById('modal');
+            const num = document.getElementById('countNum');
+            const btn = document.getElementById('dlLink');
+            
+            modal.classList.add('active');
+            let count = 5;
+            num.textContent = count;
+            btn.classList.remove('active');
+            btn.href = '#';
+            
+            clearInterval(timer);
+            timer = setInterval(() => {
+                count--;
+                num.textContent = count;
+                if (count <= 0) {
+                    clearInterval(timer);
+                    btn.classList.add('active');
+                    btn.href = url;
+                }
+            }, 1000);
+        }
+
+        function closeModal(e) {
+            if (e.target === e.currentTarget) {
+                e.currentTarget.classList.remove('active');
+                clearInterval(timer);
+            }
+        }
+
+        // Kirim lapor
+        function kirimLapor() {
+            const nama = document.getElementById('laporNama').value;
+            const game = document.getElementById('laporGame').value;
+            const pesan = document.getElementById('laporPesan').value;
+            
+            if (!nama || !pesan) return alert('Isi nama dan masalah dulu');
+            
+            const subject = `Laporan Vmind - ${game || 'Umum'}`;
+            const body = `Nama: ${nama}%0D%0AGame: ${game || '-'}%0D%0A%0D%0A${pesan}`;
+            window.open(`mailto:sonaganteeng@gmail.com?subject=${subject}&body=${body}`);
+        }
+    </script>
+</body>
+</html>
